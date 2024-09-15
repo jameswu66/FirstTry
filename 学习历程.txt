@@ -1,0 +1,51 @@
+******************git使用*******************
+https://gitee.com/ubrong/demo.git
+git clone https://gitee.com/ubrong/demo.git表示克隆到本地
+暂存，提交，推送
+
+https://www.runoob.com/git/git-basic-operations.html
+使用git菜鸟教程
+
+$ ssh -T -p 443 git@ssh.github.com连不上github时用
+
+git建立本地仓库，再与远程仓库进行交互
+1.文件夹：git init     创建.git文件夹
+2.暂存区：git add .
+3.提交到仓库：git commit -m "注释"
+
+远程仓库创建使用:
+获取密钥：ssh -keygen -t rsa
+私有密钥：/c/Users/12967/.ssh/id_rsa
+公有密钥：/c/Users/12967/.ssh/id_rsa.pub
+在github上添加ssh keys 公共密钥
+连接远程仓库：
+    git remote add origin git@github.com:jameswu66/FirstTry.git
+推送本地仓库的文件到远程仓库：
+    git push -u origin master
+
+有可能出现以下报错：
+
+error: remote origin already exists.
+    git remote rm origin
+
+$git push -u origin master时有：
+ssh: connect to host github.com port 22: Connection refused
+fatal: Could not read from remote repository.
+    解决方式：
+$ ssh-keygen -t rsa -C "1296702023@qq.com"重新生成密钥
+
+$ ssh-add ~/.ssh/id_rsa
+Could not open a connection to your authentication agent.
+找不到连接；
+$ eval $(ssh-agent)找一下
+$ ssh -v git@github.com看密钥
+
+https://blog.csdn.net/qq_40047019/article/details/122898308
+解决方法
+
+$ ssh -T git@github.com
+ssh: connect to host github.com port 22: Connection refused
+22端口拒绝；
+在vim中调整端口：
+https://blog.csdn.net/weixin_65032328/article/details/138276934
+解决方法
