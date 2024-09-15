@@ -49,3 +49,9 @@ ssh: connect to host github.com port 22: Connection refused
 在vim中调整端口：
 https://blog.csdn.net/weixin_65032328/article/details/138276934
 解决方法
+
+
+
+*********************代码的更新************************
+git clone git@github.com:jameswu66/FirstTry.git .
+然后在此之上进行更改
