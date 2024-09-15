@@ -55,3 +55,7 @@ https://blog.csdn.net/weixin_65032328/article/details/138276934
 *********************代码的更新************************
 git clone git@github.com:jameswu66/FirstTry.git .
 然后在此之上进行更改
+
+如果选择
+git push -u origin main
+则会直接在主分支上对文件进行更改
