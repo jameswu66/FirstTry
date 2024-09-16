@@ -1,2 +1,2 @@
 # FirstTry
-First time using Github
+Wu Siyi
