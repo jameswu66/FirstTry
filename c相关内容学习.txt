@@ -20,6 +20,7 @@ blkcnt_t  st_blocks  number of blocks allocated for this object
 上述内容属于linux
 windows用：
 <direct.h>
+https://www.cnblogs.com/wshyj/p/6946871.html
 
 <errno.h>
 https://www.runoob.com/cprogramming/c-standard-library-errno-h.html
