@@ -6,7 +6,7 @@ git clone https://gitee.com/ubrong/demo.git表示克隆到本地
 https://www.runoob.com/git/git-basic-operations.html
 使用git菜鸟教程
 
-$ ssh -T -p 443 git@ssh.github.com连不上github时用
+$ ssh -T -p 443 git@ssh.github.com连不上github时用，改为443端口
 
 git建立本地仓库，再与远程仓库进行交互
 1.文件夹：git init     创建.git文件夹
@@ -86,3 +86,21 @@ config、ignore等：其他配置文件和设置。
                         
 原文链接：https://blog.csdn.net/techdashen/article/details/132549336
 **************************************************
+
+
+*********************config内容**********************
+[core]
+    repositoryformatversion = 0：
+    这个设置指定了Git仓库的格式版本。当前版本一般为0。
+    filemode = false：
+    这个设置决定Git是否应当追踪文件的执行权限位。如果为false，Git将忽略文件的权限变化。
+    bare = false：
+    这个设置指定该仓库是否为裸仓库（即没有工作目录的仓库）。设置为false表示这是一个非裸仓库。
+    logallrefupdates = true：
+    这个设置确保对引用（如分支、标签等）的所有更新都会被记录在日志中。
+    symlinks = false：
+    这个设置决定Git是否应当管理符号链接。设置为false表示Git将不会处理符号链接。
+    ignorecase = true：
+    这个设置指定Git是否应忽略文件名的大小写区别。这个选项对大小写不敏感的文件系统（如Windows）特别有用。
+*****************************************************
+
