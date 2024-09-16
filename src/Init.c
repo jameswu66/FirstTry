@@ -19,7 +19,7 @@ int IsExistGit(const char *p){
     struct _stat st_dir;//目录信息结构体
     char is_path_exist[1024];//路径名
     snprintf(is_path_exist, sizeof(is_path_exist), "%s\\.git", p);//将拼接的路径传入is_path_exist
-    if(_stat(is_path_exist,&st_dir)==0&&(st.st_mode & _S_IFDIR)){//如果有这个路径，且这个路径是一个目录
+    if(_stat(is_path_exist,&st_dir)==0&&(st_dir.st_mode & _S_IFDIR)){//如果有这个路径，且这个路径是一个目录
         return 1;//.git存在
     }
     return 0;
@@ -32,7 +32,7 @@ int InitGitDir(const char *p){
     if(CreateDir(path_git)==0){
         return 0;
     }//如果创建出错，则程序退出，且会打印失败的信息
-    printf("We Initialize an empty git directory in:\n");
+    printf("We Initialize an empty git directory in:");
     printf("%s\\.git\\\n",p);//打印路径
     return 1;
 }
@@ -41,7 +41,7 @@ int InitGitDir(const char *p){
 //看了一圈也就config最好写，且受到的影响小
 int CreateConfig(const char *p){
     char path_config[1024];
-    snprintf(path_config,sizeof(path_config),"%s\\.git",p);//拼接完整路径
+    snprintf(path_config,sizeof(path_config),"%s\\.git\\config",p);//拼接完整路径
     FILE *file_config=fopen(path_config,"w");//要写文件
     if(file_config==NULL){//如果打不开相应路径或者找不到路径
         perror("Error when creating config!\n");
@@ -74,7 +74,7 @@ int DiangitInit(const char *p){
     }
 
     if(IsExistGit(path_dir)){//如果存在.git说明已经是git仓库
-        printf("You are reinitializing git repository in path:\n");
+        printf("You are reinitializing git repository in path:");
         printf("%s\\.git\\\n",path_dir);
         return 0;
     }
