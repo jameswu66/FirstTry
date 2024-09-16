@@ -17,10 +17,22 @@ blksize_t st_blksize a filesystem-specific preferred I/O block size for
                      this object.  In some filesystem types, this may
                      vary from file to file
 blkcnt_t  st_blocks  number of blocks allocated for this object
-上述内容属于linux
-windows用：
+有：
+struct _stat
+int snprintf(char *str, size_t size, const char *format, ...);
+    str：指向目标缓冲区的指针，格式化后的字符串将被写入这个缓冲区。
+    size：目标缓冲区的大小，snprintf 会确保不写入超过这个大小的数据。
+    format：格式控制字符串，类似于 printf 中使用的格式控制字符串。
+    ...：可变参数列表，表示要格式化的值。
+int _stat(const char *path, struct _stat *buffer);
+    path：要检查的文件或目录的路径。
+    buffer：指向一个 struct _stat 结构体，用于存储文件或目录的状态信息。
+    成功时返回 0，并且 buffer 中会包含文件或目录的状态信息。
+    失败时返回 -1，并设置 errno 以指示错误。
+
 <direct.h>
 https://www.cnblogs.com/wshyj/p/6946871.html
+有_mkdir创建目录
 
 <errno.h>
 https://www.runoob.com/cprogramming/c-standard-library-errno-h.html
