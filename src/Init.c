@@ -24,3 +24,18 @@ int IsExistGit(const char *p){
     return 0;
 }
 
+//该创建.git了
+int Init_git_dir(const char *p){
+    char path_git[1024];
+    snprintf(path_git,sizeof(path_git),"%s\\.git",p);//拼接完整路径
+    if(CreateDir(path_git)==0){
+        return 0;
+    }//如果创建出错，则程序退出，且会打印失败的信息
+    printf("We Initialize an empty git directory in:\n");
+    printf("%s\\.git\\\n",p);//打印路径
+    return 1;
+}
+
+//创建.git中的内容
+//看了一圈也就config最好写，且受到的影响小
+
