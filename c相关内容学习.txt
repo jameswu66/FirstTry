@@ -38,3 +38,5 @@ https://www.cnblogs.com/wshyj/p/6946871.html
 https://www.runoob.com/cprogramming/c-standard-library-errno-h.html
 
 <windows.h>
+
+测试网络连接
