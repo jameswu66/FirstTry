@@ -12,7 +12,7 @@
 void SHA1(const char *file, unsigned char *out)
 {
     FILE *f = fopen(file, "rb"); // 以二进制只读方式打开文件
-    if (f = NULL)
+    if (f == NULL)
     {
         perror("Error! We can't open file!"); // 打不开就报错
         return;
@@ -44,7 +44,7 @@ int StoreSHA(const char *file, const char *store)
     snprintf(path, sizeof(path), "%s/%s", Sdir, store + 2); // 完整路径：从第三个字符开始的后半部分字符作为文件名，也存储在path中
 
     FILE *f = fopen(file, "rb");
-    if (f = NULL)
+    if (f == NULL)
     {
         perror("Error when opening file when you want to store your file!");
         return 0;
@@ -56,6 +56,7 @@ int StoreSHA(const char *file, const char *store)
 
     // 读取文件内容
     unsigned char *data = (unsigned char *)malloc(Sizefile);
+    
     fread(data, 1, Sizefile, f); // 读取文件，存储在data中
     fclose(f);
 
@@ -63,6 +64,7 @@ int StoreSHA(const char *file, const char *store)
     uLong CompressSize = compressBound(Sizefile); // 在zlib中将unsigned char typedef为uLong
     // 计算压缩后的最大可能大小
     unsigned char *compressdata = (unsigned char *)malloc(CompressSize); // 分配空间
+    
     compress(compressdata, &CompressSize, data, Sizefile);               // 将data中的Sizefile这么多内容压缩到compressdata中，并将压缩后的大小存入CompressSize中
 
     // 将压缩后的内容写在文件中
@@ -126,10 +128,11 @@ int Catfile(const char *object)
         return 0;
     }
     fread(compressdata, 1, Sizefile, file); // 读取压缩后Sizefile个字节的数据
+    printf("%s\n",compressdata);
     fclose(file);
 
     // 解压缩
-    unsigned char *data = (unsigned char *)malloc(Sizefile * 2); // 由于解压缩数据，所以需要多留空间
+    unsigned char *data = (unsigned char *)malloc(Sizefile * 3); // 由于解压缩数据，所以需要多留空间
     uLongf uncompresssize = Sizefile * 10;                        // 假设最大的解压缩后的大小为原大小的十倍
     if (data == NULL) {
         perror("Memory allocation error");
