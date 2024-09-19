@@ -2,7 +2,11 @@
     "files.associations": {
         "stdio.h": "c",
         "stdlib.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "zlib.h": "c",
+        "stat.h": "c",
+        "sha.h": "c",
+        "evp.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

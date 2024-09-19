@@ -38,3 +38,8 @@ https://www.cnblogs.com/wshyj/p/6946871.html
 https://www.runoob.com/cprogramming/c-standard-library-errno-h.html
 
 <windows.h>
+
+测试网络连接
+git config --global http.proxy 127.0.0.1:<端口号>
+git config --global https.proxy 127.0.0.1:<端口号>
+代理使用时连接github以克隆
