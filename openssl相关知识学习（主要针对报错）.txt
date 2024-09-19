@@ -1,0 +1,93 @@
+*******************<openssl>**********************
+此处编译openssl花费了我三天时间，故后续内容写得可能不完善。
+由于时间不足，此处使用了chatgpt生成了部分代码，以尽快实现相应功能；但各代码的作用和意义也会在这个过程中努力学习。
+
+OpenSSL 是一个强大的开源工具包和库，用于实现安全通信和加密功能。它广泛用于网络服务和应用程序中，以确保数据传输的保密性、完整性和真实性。以下是 OpenSSL 的一些主要功能和特点：
+
+1.加密算法库：OpenSSL 支持多种对称和非对称加密算法，如 AES、DES、RSA、DSA、ECDSA 等。
+2.哈希函数：支持多种哈希函数，如 SHA-1、SHA-256、SHA-512、MD5 等。
+3.SSL/TLS 协议：实现 Secure Sockets Layer (SSL) 和 Transport Layer Security (TLS) 协议，用于确保网络通信的安全性。
+4.证书管理：提供生成、签署、验证和管理 X.509 数字证书的工具。
+5.随机数生成：提供高质量的随机数生成器，用于加密密钥的生成和其他安全操作。
+
+此处可以使用SHA-1计算文件的哈希值，作为文件的唯一标识，实现哈希存储。
+
+1.创建和初始化消息摘要上下文：EVP_MD_CTX_new() 创建一个新的消息摘要上下文。
+2.初始化消息摘要操作：EVP_DigestInit_ex() 初始化消息摘要上下文，指定使用 SHA-1 算法。
+3.更新消息摘要上下文：EVP_DigestUpdate() 更新消息摘要上下文，并处理输入数据。
+4.完成消息摘要计算：EVP_DigestFinal_ex() 完成消息摘要计算，并将结果存储在 hash 数组中。
+5.输出哈希值：将计算得到的 SHA-1 哈希值以十六进制格式输出。
+6.清理消息摘要上下文：EVP_MD_CTX_free() 释放消息摘要上下文，以避免内存泄漏。
+
+之前尝试使用#include <openssl/sha.h>，但出现报错：
+***********************************
+warning: 'SHA1_Init' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+     SHA1_Init(&sha1);
+（上述为其中一个报错）
+***********************************
+
+查阅资料发现，在 OpenSSL 3.0 及更高版本中，SHA1_Init 以及其他 SHA1 函数被标记为弃用。因为 SHA-1 算法被认为是不安全的，因此 OpenSSL 推动开发者逐步改用更安全的哈希算法。（gpt说）
+故后续改为
+使用 EVP 来计算 SHA-1 哈希，即上述使用的EVP作为开头的库函数，源自于<openssl/evp.h>
+
+然而后续又出现报错：
+***************************************
+C:\Users\12967\AppData\Local\Temp\cceCkxvv.o: In function compute_sha1':
+C:/Users/12967/Desktop/test/test2.c:17: undefined reference to EVP_MD_CTX_new'
+C:/Users/12967/Desktop/test/test2.c:18: undefined reference to EVP_sha1'
+C:/Users/12967/Desktop/test/test2.c:20: undefined reference to EVP_DigestInit_ex'
+C:/Users/12967/Desktop/test/test2.c:21: undefined reference to EVP_DigestUpdate'
+C:/Users/12967/Desktop/test/test2.c:22: undefined reference to EVP_DigestFinal_ex'
+C:/Users/12967/Desktop/test/test2.c:24: undefined reference to EVP_MD_CTX_free'
+C:\Users\12967\AppData\Local\Temp\cceCkxvv.o: In function compress_data':
+C:/Users/12967/Desktop/test/test2.c:29: undefined reference to compressBound'
+C:/Users/12967/Desktop/test/test2.c:35: undefined reference to compress'
+C:\Users\12967\AppData\Local\Temp\cceCkxvv.o: In function decompress_data':
+C:/Users/12967/Desktop/test/test2.c:121: undefined reference to uncompress'
+collect2.exe: error: ld returned 1 exit status
+***************************************
+
+openssl与一般的头文件<stdio.h>的差别：
+一般头文件（标准库头文件）是编译器和操作系统的一部分。
+而openssl是一个独立的库，通常需要单独安装和链接
+此处上网查阅资料进行了openssl库的编译和安装
+
+首先区分静态库和动态库：
+特性                    静态库	                    动态库
+链接时间	            编译时链接	                运行时链接
+生成的可执行文件大小	较大（包含所有库代码）	        较小（库代码不包含在内）
+依赖性	                独立性强（无需库文件）	        依赖动态库的存在
+共享性	                不共享	                    可共享
+更新和维护	            更新需重新编译应用程序	       库更新无需重新编译应用程序
+启动时间	            较快（无需加载库文件）	        较慢（需加载库文件）
+管理复杂性	                较简单	                    较复杂（需管理库路径和版本）
+
+此处使用静态库完成代码相关的需求
+
+一直装不好，我***************************
+此处根据B站视频进行的安装
+【openssl在vs2022下的编译过程】https://www.bilibili.com/video/BV1vb4y1T7PX?vd_source=5e7c299d60f4c3f82cd34174b54fc02b
+
+当然，在此之前根据CSDN和百度相关资源自行进行尝试，安装了msys2，visual studio，strawberry perl， nasm，最终都会报错：undefined reference
+因为openssl没有装上
+
+但是装上之后依旧报错，显示的报错信息为
+*********************************
+E:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lssl
+E:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lcrypto
+*********************************
+
+故又对vscode内进行配置：
+****************************
+"-I",
+"C:\\Program Files\\OpenSSL\\include",
+"-L",
+"C:\\Program Files\\OpenSSL\\lib",
+"-lssl",
+"-lcrypto",
+"-lz",
+****************************
+还不知道上述内容的具体含义，后续再学
+
+后来发现即便进行配置依旧不行，故再度对vscode进行更改，还将其他的gcc地址、gdb地址改至msys2的mingw64才能编译openssl
+很神奇，原因在查，但是还不知道怎么查

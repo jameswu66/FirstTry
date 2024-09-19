@@ -4,7 +4,7 @@
 		{
 			"type": "cppbuild",
 			"label": "C/C++: gcc.exe 生成活动文件",
-			"command": "E:/mingw64/bin/gcc.exe",
+			"command": "C:/msys64/mingw64/bin/gcc.exe",//"E:/mingw64/bin/gcc.exe",
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
@@ -13,15 +13,22 @@
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
 				//"-fexec-charset=GB18030"//外置终端中文不乱码
+				"-I",
+				"C:\\Program Files\\OpenSSL\\include",
+				"-L",
+				"C:\\Program Files\\OpenSSL\\lib",
+				"-lssl",
+				"-lcrypto",
+				"-lz",
 			],
 			"options": {
-				"cwd": "E:/mingw64/bin"
+				"cwd": "C:/msys64/mingw64/bin",//"E:/mingw64/bin"
 			},
 			"problemMatcher": [
 				"$gcc"
 			],
 			"group": "build",
-			"detail": "编译器: E:/mingw64/bin/gcc.exe"
+			"detail": "编译器: C:/msys64/mingw64/bin/gcc.exe"//E:/mingw64/bin/gcc.exe
 		}
 	]
 }

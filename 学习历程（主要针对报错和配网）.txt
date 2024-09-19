@@ -1,0 +1,106 @@
+******************git使用*******************
+https://gitee.com/ubrong/demo.git
+git clone https://gitee.com/ubrong/demo.git表示克隆到本地
+暂存，提交，推送
+
+https://www.runoob.com/git/git-basic-operations.html
+使用git菜鸟教程
+
+$ ssh -T -p 443 git@ssh.github.com连不上github时用，改为443端口
+
+git建立本地仓库，再与远程仓库进行交互
+1.文件夹：git init     创建.git文件夹
+2.暂存区：git add .
+3.提交到仓库：git commit -m "注释"
+
+远程仓库创建使用:
+获取密钥：ssh -keygen -t rsa
+私有密钥：/c/Users/12967/.ssh/id_rsa
+公有密钥：/c/Users/12967/.ssh/id_rsa.pub
+在github上添加ssh keys 公共密钥
+连接远程仓库：
+    git remote add origin git@github.com:jameswu66/FirstTry.git
+推送本地仓库的文件到远程仓库：
+    git push -u origin master
+
+有可能出现以下报错：
+
+error: remote origin already exists.
+    git remote rm origin
+
+$git push -u origin master时有：
+ssh: connect to host github.com port 22: Connection refused
+fatal: Could not read from remote repository.
+    解决方式：
+$ ssh-keygen -t rsa -C "1296702023@qq.com"重新生成密钥
+
+$ ssh-add ~/.ssh/id_rsa
+Could not open a connection to your authentication agent.
+找不到连接；
+$ eval $(ssh-agent)找一下
+$ ssh -v git@github.com看密钥
+
+https://blog.csdn.net/qq_40047019/article/details/122898308
+解决方法
+
+$ ssh -T git@github.com
+ssh: connect to host github.com port 22: Connection refused
+22端口拒绝；
+在vim中调整端口：
+https://blog.csdn.net/weixin_65032328/article/details/138276934
+解决方法
+
+
+
+*********************代码的更新************************
+git clone git@github.com:jameswu66/FirstTry.git .
+然后在此之上进行更改
+
+如果选择
+git push -u origin main
+则会直接在主分支上对文件进行更改
+
+************************************************
+.git中相关文件的内容和作用：
+HEAD：指向当前所在的分支（或者是一个特定的提交）。
+
+branches：存储了每个远程分支的相关信息。
+
+config：存储了项目级别的Git配置信息，包括用户名、邮箱、远程仓库等。
+
+description：对于空的Git仓库，此文件内容为空。对于非空的Git仓库，描述该项目的文本。
+
+hooks：存放各种Git钩子（hooks）的目录，包括预定义的钩子模板和用户自定义的钩子脚本。
+
+index：包含了暂存区（stage）的内容，记录了即将提交的文件和相关元数据。
+
+info：包含一些辅助性的信息。
+
+logs：存储了每个引用（分支、标签等）的修改历史。
+
+objects：存储了Git仓库的对象（commits、trees和blobs）。
+
+refs：存储了所有的引用（分支、标签等）。
+
+config、ignore等：其他配置文件和设置。
+                        
+原文链接：https://blog.csdn.net/techdashen/article/details/132549336
+**************************************************
+
+
+*********************config内容**********************
+[core]
+    repositoryformatversion = 0：
+    这个设置指定了Git仓库的格式版本。当前版本一般为0。
+    filemode = false：
+    这个设置决定Git是否应当追踪文件的执行权限位。如果为false，Git将忽略文件的权限变化。
+    bare = false：
+    这个设置指定该仓库是否为裸仓库（即没有工作目录的仓库）。设置为false表示这是一个非裸仓库。
+    logallrefupdates = true：
+    这个设置确保对引用（如分支、标签等）的所有更新都会被记录在日志中。
+    symlinks = false：
+    这个设置决定Git是否应当管理符号链接。设置为false表示Git将不会处理符号链接。
+    ignorecase = true：
+    这个设置指定Git是否应忽略文件名的大小写区别。这个选项对大小写不敏感的文件系统（如Windows）特别有用。
+*****************************************************
+
