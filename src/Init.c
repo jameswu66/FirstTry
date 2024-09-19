@@ -87,5 +87,9 @@ int DiangitInit(const char *p){
         return 0;
     }
 
+    char git_objects_dir[1024];
+    snprintf(git_objects_dir, sizeof(git_objects_dir), "%s/.git/objects", path_dir);
+    CreateDir(git_objects_dir);
+
     return 1;
 }
