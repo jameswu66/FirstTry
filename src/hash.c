@@ -4,7 +4,6 @@
 #include <errno.h>
 #include <direct.h>
 #include <sys/stat.h>
-#include <windows.h>
 #include <openssl/evp.h>
 #include <zlib.h>
 
@@ -80,8 +79,10 @@ int StoreSHA(const char *file, const char *store)
 
     // 写入对象的格式blob
     char head[128];
-    int Sizehead = snprintf(head, sizeof(head), "blob%lu\0", Sizefile); // 给blob开头，并写入文件的大小
+    int Sizehead = snprintf(head, sizeof(head), "blob%lu", Sizefile); // 给blob开头，并写入文件的大小
+    //printf("%d",Sizehead);
     fwrite(head, 1, Sizehead, object);                                  // 写入文件头的信息
+    fwrite('\0',1,1,object);
     fwrite(compressdata, 1, CompressSize, object);                      // 写入压缩后的文件内容
 
     fclose(object);
@@ -95,6 +96,7 @@ int Catfile(const char *object)
 {
     char path[1024];
     snprintf(path, sizeof(path), ".git/objects/%.2s/%s", object, object + 2);// 读取想要读取文件的路径
+    //printf("%s\n\n",path);
     FILE *file = fopen(path, "rb");                                           // 只读模式打开
 
     if (file == NULL)
@@ -116,6 +118,7 @@ int Catfile(const char *object)
     } // 找不到则说明文件头有问题
 
     size_t headlength = endhead - head;         // 计算文件头的字节长度，从末尾的\0的位置到开始
+    //printf("%d\n\n",headlength);
     long Sizefile = strtol(head + 5, NULL, 10); // 跳过blob 的部分，只读后面的文件大小，将十进制的大小存在filesize里
     // 文件可能很大，所以用long类型
     //printf("%lld",Sizefile);//测试
